@@ -7,26 +7,38 @@ services:
     extends:
       file: docker-compose.yml
       service: master-filebeat
+    labels:
+      - "traefik.enable=false"
+
 
   logstash:
     extends:
       file: docker-compose.yml
       service: logstash
+    labels:
+      - "traefik.enable=false"
+
 
   validate-logstash-config:
     extends:
       file: docker-compose.yml
       service: validate-logstash-config
+    labels:
+      - "traefik.enable=false"
 
   elasticsearch:
     extends:
       file: docker-compose.yml
       service: elasticsearch
+    labels:
+      - "traefik.enable=false"
 
   curator:
     extends:
       file: docker-compose.yml
       service: curator
+    labels:
+      - "traefik.enable=false"
 
   kibana:
     extends:
@@ -38,6 +50,8 @@ services:
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       - LETSENCRYPT_TEST=false
       - HTTPS_METHOD=nohttp
+    labels:
+      - "traefik.enable=false"
 
   # elastalert:
   #   extends:
@@ -48,6 +62,3 @@ networks:
   default:
     external:
       name: monitoring_logging
-
-
-

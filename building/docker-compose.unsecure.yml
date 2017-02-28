@@ -16,6 +16,10 @@ services:
       service: sonarqube
     ports:
       - 9000:9000
+  sonarscan:
+    extends:
+      file: docker-compose.yml
+      service: sonarscan
 
 networks:
   default:

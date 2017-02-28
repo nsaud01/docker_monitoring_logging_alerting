@@ -10,6 +10,32 @@ services:
     ports:
       - 9200:9200
 
+  master-filebeat:
+    extends:
+      file: docker-compose.yml
+      service: master-filebeat
+
+  logstash:
+    extends:
+      file: docker-compose.yml
+      service: logstash
+
+
+  validate-logstash-config:
+    extends:
+      file: docker-compose.yml
+      service: validate-logstash-config
+
+  curator:
+    extends:
+      file: docker-compose.yml
+      service: curator
+
+kibana:
+  extends:
+    file: docker-compose.yml
+    service: kibana
+
 networks:
   default:
     external:

@@ -21,11 +21,6 @@ services:
       - ../storage/jenkins:/var/jenkins_home
     labels:
       container_group: building
-    healthcheck:
-      test: ["CMD", "curl, "-f", "http://localhost:8080"]
-      interval: 30s
-      timeout: 10s
-      retries: 7
     logging:
       driver: gelf
       options:
@@ -46,11 +41,6 @@ services:
       - ../storage/sonarqube:/data
     environment:
       - SONARQUBE_HOME=/data
-    healthcheck:
-      test: ["CMD", "curl, "-f", "http://localhost:9000"]
-      interval: 30s
-      timeout: 10s
-      retries: 7
     logging:
       driver: gelf
       options:
@@ -75,8 +65,7 @@ services:
       - SONAR_PROJECT_NAME=HelloWorld
       - SONAR_PROJECT_VERSION=0.1
     depends_on:
-      sonarqube:
-        condition: service_healthy
+      - sonarqube
     logging:
       driver: gelf
       options:

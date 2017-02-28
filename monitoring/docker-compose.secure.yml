@@ -7,11 +7,15 @@ services:
     extends:
       file: docker-compose.yml
       service: master-nodeexporter
+    labels:
+      - "traefik.enable=false"
 
   master-cadvisor:
     extends:
       file: docker-compose.yml
       service: master-cadvisor
+    labels:
+      - "traefik.enable=false"
 
   prometheus:
     extends:
@@ -23,6 +27,8 @@ services:
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       - LETSENCRYPT_TEST=false
       - HTTPS_METHOD=nohttp
+    labels:
+      - "traefik.enable=false"
 
   grafana:
     extends:
@@ -35,6 +41,8 @@ services:
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       - LETSENCRYPT_TEST=false
       - HTTPS_METHOD=nohttp
+    labels:
+      - "traefik.enable=false"
 
   alertmanager:
     extends:
@@ -46,6 +54,8 @@ services:
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       - LETSENCRYPT_TEST=false
       - HTTPS_METHOD=nohttp
+    labels:
+      - "traefik.enable=false"
 
 networks:
   default:

@@ -13,6 +13,8 @@ services:
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       - LETSENCRYPT_TEST=false
       - HTTPS_METHOD=nohttp
+    labels:
+      - "traefik.enable=false"
 
   sonarqube:
     extends:
@@ -24,6 +26,16 @@ services:
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       - LETSENCRYPT_TEST=false
       - HTTPS_METHOD=nohttp
+    labels:
+      - "traefik.enable=false"
+
+  sonarscan:
+    extends:
+        file: docker-compose.yml
+        service: sonarscan
+    labels:
+      - "traefik.enable=false"
+
 
 networks:
   default:
