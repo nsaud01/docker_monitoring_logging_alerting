@@ -35,8 +35,10 @@ services:
     extends:
       file: docker-compose.yml
       service: kibana
+    ports:
+      - "5601:5601"
 
 networks:
   default:
     external:
-      name: www
+      name: monitoring_logging
