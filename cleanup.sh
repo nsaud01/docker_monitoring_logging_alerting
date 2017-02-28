@@ -20,6 +20,7 @@ elif [ $# -eq 1 ]; then
     docker-compose -f monitoring/docker-compose.unsecure.yml down -v
     docker-compose -f logging/docker-compose.unsecure.yml down -v
     docker-compose -f building/docker-compose.unsecure.yml down -v
+    docker-compose -f www/docker-compose.unsecure.yml down -v
 
   elif [ "$1" = "secure" ]; then
 
@@ -36,6 +37,7 @@ elif [ $# -eq 1 ]; then
     docker-compose -f logging/docker-compose.secure.yml down -v
     docker-compose -f proxy/docker-compose.yml down -v
     docker-compose -f building/docker-compose.yml down -v
+    docker-compose -f www/docker-compose.yml down -v
 
   else
     echo $ERROR_MSG

@@ -68,7 +68,7 @@ services:
     labels:
       container_group: building
     volumes:
-      - ../www/app:/usr/src
+      - ../storage/app:/usr/src
     environment:
       - SONAR_HOST_URL=http://sonar:9000
       - SONAR_PROJECT_KEY=hello:world
