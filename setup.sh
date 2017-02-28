@@ -31,7 +31,7 @@ elif [ $# -eq 1 ]; then
     echo "------------------------------------------------------------"
     docker-compose -f monitoring/docker-compose.unsecure.yml pull
     docker-compose -f logging/docker-compose.unsecure.yml pull
-    docker-compose -f building/docker-compose.unsecure.yml pull
+    docker-compose -f building/docker-compose.yml pull
     docker-compose -f www/docker-compose.yml pull
 
     echo "------------------------------------------------------------"
@@ -39,7 +39,7 @@ elif [ $# -eq 1 ]; then
     echo "------------------------------------------------------------"
     docker-compose -f monitoring/docker-compose.unsecure.yml build
     docker-compose -f logging/docker-compose.unsecure.yml build
-    docker-compose -f building/docker-compose.unsecure.yml build
+    docker-compose -f building/docker-compose.yml build
     docker-compose -f www/docker-compose.yml build
 
     echo "------------------------------------------------------------"
@@ -47,7 +47,7 @@ elif [ $# -eq 1 ]; then
     echo "------------------------------------------------------------"
     docker-compose -f monitoring/docker-compose.unsecure.yml up --force-recreate -d
     docker-compose -f logging/docker-compose.unsecure.yml up --force-recreate -d
-    docker-compose -f building/docker-compose.unsecure.yml up --force-recreate -d
+    docker-compose -f building/docker-compose.yml up --force-recreate -d
     docker-compose -f www/docker-compose.yml up --force-recreate -d
 
     echo "------------------------------------------------------------"
@@ -132,7 +132,7 @@ elif [ $# -eq 4 ]; then
     echo "------------------------------------------------------------"
     docker-compose -f monitoring/docker-compose.secure.yml up --force-recreate -d
     docker-compose -f logging/docker-compose.secure.yml up --force-recreate -d
-    docker-compose -f building/docker-compose.secure.yml up --force-recreate -d
+    docker-compose -f building/docker-compose.yml up --force-recreate -d
 
 
 
@@ -146,19 +146,20 @@ elif [ $# -eq 4 ]; then
     echo "############################### Starting proxy container group..."
     echo "------------------------------------------------------------"
     #docker-compose -f proxy/docker-compose.yml up --force-recreate -d
-
-    echo "------------------------------------------------------------"
-    echo "############################### Tailing the logs of the nginx-letsencrypt container through the creation of the Diffie-Hellman group and the initial setup of your SSL certificates..."
-    echo "------------------------------------------------------------"
-    echo "xxxxxxxxxxxx Start of logs, please be patient. Presumably you can make some noise on a different shell to help create some entropy during the creation of the DH parameters..."
-    #sh -c 'docker logs -f proxy_nginx-letsencrypt_1 | { sed "/Reloading nginx proxy.../ q" && kill $$ ;}'
-    echo "xxxxxxxxxxxx End of logs."
-
-    echo "------------------------------------------------------------"
-    echo "############################### Restarting proxy container group..."
-    echo "------------------------------------------------------------"
-    #docker-compose -f proxy/docker-compose.yml up --force-recreate -d
     docker-compose -f www/docker-compose.yml up --force-recreate -d
+
+    #echo "------------------------------------------------------------"
+    #echo "############################### Tailing the logs of the nginx-letsencrypt container through the creation of the Diffie-Hellman group and the initial setup of your SSL certificates..."
+    #echo "------------------------------------------------------------"
+    #echo "xxxxxxxxxxxx Start of logs, please be patient. Presumably you can make some noise on a different shell to help create some entropy during the creation of the DH parameters..."
+    #sh -c 'docker logs -f proxy_nginx-letsencrypt_1 | { sed "/Reloading nginx proxy.../ q" && kill $$ ;}'
+    #echo "xxxxxxxxxxxx End of logs."
+
+    #echo "------------------------------------------------------------"
+    #echo "############################### Restarting proxy container group..."
+    #echo "------------------------------------------------------------"
+    #docker-compose -f proxy/docker-compose.yml up --force-recreate -d
+
 
     echo "------------------------------------------------------------"
     echo "############################### Output from 'docker ps'..."
