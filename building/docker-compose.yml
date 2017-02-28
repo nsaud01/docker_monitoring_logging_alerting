@@ -20,7 +20,7 @@ services:
       - /usr/bin/make:/usr/bin/make
       - ../storage/jenkins:/var/jenkins_home
     labels:
-      container_group: building
+      - container_group: building
       - "traefik.enable=true"
       - "traefik.backend=jenkins"
       - "traefik.frontend.rule=Host:jenkins.${DOMAIN}"
@@ -37,12 +37,12 @@ services:
 
   # Runs a sonarqube to keep track of your l33t skillz
   sonarqube:
-    image: sonarqube:alpine
+    image: sonarqube
     expose:
       - 9000
     restart: always
     labels:
-      container_group: building
+      - container_group: building
       - "traefik.enable=true"
       - "traefik.backend=sonarqube"
       - "traefik.frontend.rule=Host:sonarqube.${DOMAIN}"
@@ -63,34 +63,6 @@ services:
         labels: container_group
 
 #########################################################
-
-#########################################################
-
-  # Runs a sonar-scanner of your app
-  sonarscan:
-    image: mercuriete/sonar-scanner
-    restart: always
-    labels:
-      container_group: building
-    volumes:
-      - ../storage/app:/usr/src
-    environment:
-      - SONAR_HOST_URL=http://172.24.0.42:9000
-      - SONAR_PROJECT_KEY=hello:world
-      - SONAR_PROJECT_NAME=HelloWorld
-      - SONAR_PROJECT_VERSION=0.1
-    networks:
-      default:
-    depends_on:
-      - sonarqube
-    labels:
-      - "traefik.enable=false"
-
-    logging:
-      driver: gelf
-      options:
-        gelf-address: udp://172.24.0.38:12201
-        labels: container_group
 
 #########################################################
 ####                   Networking                    ####
