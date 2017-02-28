@@ -51,10 +51,10 @@ elif [ $# -eq 1 ]; then
     docker ps
 
     echo "------------------------------------------------------------"
-    echo "############################### Grab Jenkins Admin Token here:..."
+    echo "############################### Grab Jenkins Admin Token in ../storage/jenkins/secrets/initialAdminPassword:"
     echo "------------------------------------------------------------"
-    ls ./storage/jenkins/secrets/initialAdminPassword
-    cat ./storage/jenkins/secrets/initialAdminPassword
+    ls ../storage/jenkins/secrets/initialAdminPassword
+    cat ../storage/jenkins/secrets/initialAdminPassword
 
     echo "------------------------------------------------------------"
     echo "############################### Finished - you're all set up. Use cleanup.sh to uninstall the suite."
@@ -84,6 +84,7 @@ elif [ $# -eq 3 ]; then
     echo "------------------------------------------------------------"
     echo "############################### Setting passwords for basic auth..."
     echo "------------------------------------------------------------"
+    mkdir storage/nginx-proxy
     htpasswd -bc storage/nginx-proxy/htpasswd/kibana.$DOMAIN admin $PASSWORD
     htpasswd -bc storage/nginx-proxy/htpasswd/prometheus.$DOMAIN admin $PASSWORD
     htpasswd -bc storage/nginx-proxy/htpasswd/alertmanager.$DOMAIN admin $PASSWORD
@@ -145,11 +146,11 @@ elif [ $# -eq 3 ]; then
     docker ps
 
     echo "------------------------------------------------------------"
-    echo "############################### Grab Jenkins Admin Token here:..."
+    echo "############################### Grab Jenkins Admin Token in ../storage/jenkins/secrets/initialAdminPassword:"
     echo "------------------------------------------------------------"
-    ls ./storage/jenkins/secrets/initialAdminPassword
-    cat ./storage/jenkins/secrets/initialAdminPassword
-    
+    ls ../storage/jenkins/secrets/initialAdminPassword
+    cat ../storage/jenkins/secrets/initialAdminPassword
+
     echo "------------------------------------------------------------"
     echo "############################### Finished - you're all set up. You can now go to grafana.${DOMAIN}, kibana.${DOMAIN}, prometheus.${DOMAIN} and alertmanager.${DOMAIN} to check out your metrics, logs and alerts. Use cleanup.sh to uninstall the suite."
     echo "------------------------------------------------------------"

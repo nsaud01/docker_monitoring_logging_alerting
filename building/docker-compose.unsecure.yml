@@ -7,12 +7,16 @@ services:
     extends:
       file: docker-compose.yml
       service: jenkins
+    ports:
+      - 8090:8080
 
   sonarqube:
     extends:
       file: docker-compose.yml
       service: sonarqube
-    
+    ports:
+      - 9000:9000
+
 networks:
   default:
     external:
