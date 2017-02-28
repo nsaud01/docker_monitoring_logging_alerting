@@ -1,0 +1,17 @@
+version: '2'
+
+
+services:
+
+  traefik:
+    extends:
+      file: docker-compose.yml
+      service: traefik
+    command: --web --docker --docker.domain=local --logLevel=DEBUG
+    ports:
+      - 8081:8080
+      - 8000:80
+networks:
+  default:
+    external:
+      name: www

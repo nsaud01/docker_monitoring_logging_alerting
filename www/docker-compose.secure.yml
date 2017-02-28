@@ -1,0 +1,21 @@
+version: '2'
+
+
+services:
+
+  traefik:
+    extends:
+      file: docker-compose.yml
+      service: traefik
+    command: --web --docker --docker.domain=www.${DOMAIN} --logLevel=DEBUG
+    environment:
+      - VIRTUAL_HOST=www.${DOMAIN}
+      - LETSENCRYPT_HOST=www.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
+      - LETSENCRYPT_TEST=false
+      - HTTPS_METHOD=nohttp
+
+networks:
+  default:
+    external:
+      name: www

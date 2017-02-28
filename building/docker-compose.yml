@@ -21,6 +21,11 @@ services:
       - ../storage/jenkins:/var/jenkins_home
     labels:
       container_group: building
+    healthcheck:
+      test: ["CMD", "curl, "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 7
     logging:
       driver: gelf
       options:
@@ -31,7 +36,7 @@ services:
 
   # Runs a sonarqube to keep track of your l33t skillz
   sonarqube:
-    image: sonarqube
+    image: sonarqube:alpine
     expose:
       - 9000
     restart: always
@@ -41,6 +46,11 @@ services:
       - ../storage/sonarqube:/data
     environment:
       - SONARQUBE_HOME=/data
+    healthcheck:
+      test: ["CMD", "curl, "-f", "http://localhost:9000"]
+      interval: 30s
+      timeout: 10s
+      retries: 7
     logging:
       driver: gelf
       options:
@@ -49,6 +59,31 @@ services:
 
 #########################################################
 
+#########################################################
+
+  # Runs a sonar-scanner of your app
+  sonarscan:
+    image: mercuriete/sonar-scanner
+    restart: always
+    labels:
+      container_group: building
+    volumes:
+      - ../www/app:/usr/src
+    environment:
+      - SONAR_HOST_URL=http://sonar:9000
+      - SONAR_PROJECT_KEY=hello:world
+      - SONAR_PROJECT_NAME=HelloWorld
+      - SONAR_PROJECT_VERSION=0.1
+    depends_on:
+      sonarqube:
+        condition: service_healthy
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://172.16.0.38:12201
+        labels: container_group
+
+#########################################################
 
 #########################################################
 ####                   Networking                    ####
@@ -58,6 +93,6 @@ services:
 networks:
   default:
     external:
-      name: monitoring_logging
+      name: building
 
 #########################################################

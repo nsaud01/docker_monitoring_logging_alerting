@@ -1,0 +1,45 @@
+version: '2'
+
+
+services:
+
+#########################################################
+####                   BUILDING                      ####
+#########################################################
+
+  # Spins up a Jenkins Instance to build code
+  traefik:
+    image: traefik
+    expose:
+      - 80
+      - 443
+      - 8080
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - /dev/null:/traefik.toml
+    labels:
+      container_group: www
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://172.16.0.38:12201
+        labels: container_group
+
+#########################################################
+
+
+#########################################################
+
+
+#########################################################
+####                   Networking                    ####
+#########################################################
+
+# Extra-network is necessary to have a dedicated IP for Logstash to forwards log to.
+networks:
+  default:
+    external:
+      name: www
+
+#########################################################

@@ -46,6 +46,8 @@ elif [ $# -eq 1 ]; then
   echo "############################### Removing network..."
   echo "------------------------------------------------------------"
   docker network rm monitoring_logging
+  docker network rm building
+  docker network rm www
 
   echo "------------------------------------------------------------"
   echo "############################### Output from \'docker ps -a\'..."

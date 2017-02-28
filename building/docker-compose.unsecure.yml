@@ -20,4 +20,4 @@ services:
 networks:
   default:
     external:
-      name: monitoring_logging
+      name: building
