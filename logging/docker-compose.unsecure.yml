@@ -31,10 +31,10 @@ services:
       file: docker-compose.yml
       service: curator
 
-kibana:
-  extends:
-    file: docker-compose.yml
-    service: kibana
+  kibana:
+    extends:
+      file: docker-compose.yml
+      service: kibana
 
 networks:
   default:
