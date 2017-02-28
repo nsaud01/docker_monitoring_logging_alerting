@@ -36,13 +36,6 @@ services:
     labels:
       - "traefik.enable=false"
 
-  logstash:
-    extends:
-      file: docker-compose.yml
-      service: logstash
-    labels:
-      - "traefik.enable=false"
-
 
 networks:
   default:
