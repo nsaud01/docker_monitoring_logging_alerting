@@ -69,11 +69,12 @@ elif [ $# -eq 1 ]; then
     echo $ERROR_MSG
   fi
 
-elif [ $# -eq 3 ]; then
+elif [ $# -eq 4 ]; then
   if [ "$1" = "secure" ]; then
 
     export DOMAIN=$2
-    export PASSWORD=$3
+    export EMAIL=$3
+    export PASSWORD=$4
 
     echo "------------------------------------------------------------"
     echo "############################### Installing suite in SECURE mode."
@@ -86,13 +87,19 @@ elif [ $# -eq 3 ]; then
 
     echo "......"
 
+    #echo "------------------------------------------------------------"
+    #echo "############################### Setting passwords for basic auth..."
+    #echo "------------------------------------------------------------"
+    #mkdir storage/nginx-proxy
+    #htpasswd -bc storage/nginx-proxy/htpasswd/kibana.$DOMAIN admin $PASSWORD
+    #htpasswd -bc storage/nginx-proxy/htpasswd/prometheus.$DOMAIN admin $PASSWORD
+    #htpasswd -bc storage/nginx-proxy/htpasswd/alertmanager.$DOMAIN admin $PASSWORD
+
     echo "------------------------------------------------------------"
-    echo "############################### Setting passwords for basic auth..."
+    echo "############################### Setting Traefik ..."
     echo "------------------------------------------------------------"
-    mkdir storage/nginx-proxy
-    htpasswd -bc storage/nginx-proxy/htpasswd/kibana.$DOMAIN admin $PASSWORD
-    htpasswd -bc storage/nginx-proxy/htpasswd/prometheus.$DOMAIN admin $PASSWORD
-    htpasswd -bc storage/nginx-proxy/htpasswd/alertmanager.$DOMAIN admin $PASSWORD
+    sed -i 's/letsencrypt\@example\.com/$EMAIL/g' ./www/conf/traefik.toml
+    sed -i 's/example\.com/$DOMAIN/g' ./www/conf/traefik.toml
 
     echo "------------------------------------------------------------"
     echo "############################### Creating separate docker network..."
@@ -105,7 +112,7 @@ elif [ $# -eq 3 ]; then
     echo "------------------------------------------------------------"
     docker-compose -f monitoring/docker-compose.secure.yml pull
     docker-compose -f logging/docker-compose.secure.yml pull
-    docker-compose -f proxy/docker-compose.yml pull
+    #docker-compose -f proxy/docker-compose.yml pull
     docker-compose -f building/docker-compose.yml pull
     docker-compose -f www/docker-compose.yml pull
 
@@ -114,7 +121,7 @@ elif [ $# -eq 3 ]; then
     echo "------------------------------------------------------------"
     docker-compose -f monitoring/docker-compose.secure.yml build
     docker-compose -f logging/docker-compose.secure.yml build
-    docker-compose -f proxy/docker-compose.yml build
+    #docker-compose -f proxy/docker-compose.yml build
     docker-compose -f building/docker-compose.yml build
     docker-compose -f www/docker-compose.yml build
 
@@ -136,19 +143,19 @@ elif [ $# -eq 3 ]; then
     echo "------------------------------------------------------------"
     echo "############################### Starting proxy container group..."
     echo "------------------------------------------------------------"
-    docker-compose -f proxy/docker-compose.yml up --force-recreate -d
+    #docker-compose -f proxy/docker-compose.yml up --force-recreate -d
 
     echo "------------------------------------------------------------"
     echo "############################### Tailing the logs of the nginx-letsencrypt container through the creation of the Diffie-Hellman group and the initial setup of your SSL certificates..."
     echo "------------------------------------------------------------"
     echo "xxxxxxxxxxxx Start of logs, please be patient. Presumably you can make some noise on a different shell to help create some entropy during the creation of the DH parameters..."
-    sh -c 'docker logs -f proxy_nginx-letsencrypt_1 | { sed "/Reloading nginx proxy.../ q" && kill $$ ;}'
+    #sh -c 'docker logs -f proxy_nginx-letsencrypt_1 | { sed "/Reloading nginx proxy.../ q" && kill $$ ;}'
     echo "xxxxxxxxxxxx End of logs."
 
     echo "------------------------------------------------------------"
     echo "############################### Restarting proxy container group..."
     echo "------------------------------------------------------------"
-    docker-compose -f proxy/docker-compose.yml up --force-recreate -d
+    #docker-compose -f proxy/docker-compose.yml up --force-recreate -d
     docker-compose -f www/docker-compose.secure.yml up --force-recreate -d
 
     echo "------------------------------------------------------------"
