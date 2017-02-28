@@ -18,7 +18,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:rw
       - /usr/bin/docker:/usr/bin/docker
       - /usr/bin/make:/usr/bin/make
-      - ./storage/jenkins:/var/jenkins_home
+      - ../storage/jenkins:/var/jenkins_home
     labels:
       container_group: building
     logging:
@@ -38,7 +38,7 @@ services:
     labels:
       container_group: monitoring
     volumes:
-      - ./storage/sonarqube:/data
+      - ../storage/sonarqube:/data
     environment:
       - SONARQUBE_HOME=/data
     logging:
