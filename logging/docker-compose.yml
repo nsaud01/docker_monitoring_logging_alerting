@@ -146,6 +146,14 @@ networks:
   default:
     external:
       name: monitoring_logging
+  building:
+    external:
+      name: building
+  default:
+    external:
+      name: www
+
+
 
 #########################################################
 
