@@ -53,7 +53,8 @@ elif [ $# -eq 1 ]; then
     echo "------------------------------------------------------------"
     echo "############################### Grab Jenkins Admin Token here:..."
     echo "------------------------------------------------------------"
-    docker-compose -f building/docker-compose.unsecure.yml logs jenkins
+    ls ./storage/jenkins/secrets/initialAdminPassword
+    cat ./storage/jenkins/secrets/initialAdminPassword
 
     echo "------------------------------------------------------------"
     echo "############################### Finished - you're all set up. Use cleanup.sh to uninstall the suite."
@@ -72,7 +73,7 @@ elif [ $# -eq 3 ]; then
     echo "------------------------------------------------------------"
     echo "############################### Installing suite in SECURE mode."
     echo "############################### This means |YES| SSL/HTTPS, |YES| (basic) authentication but |NO| port forwading from the containers to the host machine. This mode is for running the suite out in the open, but won't work on machines that are not reachable directly via the internet."
-    echo "############################### Also make sure you already set up DNS entries for grafana.${DOMAIN}, kibana.${DOMAIN}, prometheus.${DOMAIN} and alertmanager.${DOMAIN}."
+    echo "############################### Also make sure you already set up DNS entries for grafana.${DOMAIN}, kibana.${DOMAIN}, prometheus.${DOMAIN}, alertmanager.${DOMAIN}, jenkins.${DOMAIN} and sonarqube.${DOMAIN}."
     echo  "############################### If you haven't done that, do it first. Hit enter to continue or Ctrl-C to abort..."
     read _
     echo "############################### Commencing!"
@@ -146,8 +147,9 @@ elif [ $# -eq 3 ]; then
     echo "------------------------------------------------------------"
     echo "############################### Grab Jenkins Admin Token here:..."
     echo "------------------------------------------------------------"
-    docker-compose -f building/docker-compose.yml logs jenkins
-
+    ls ./storage/jenkins/secrets/initialAdminPassword
+    cat ./storage/jenkins/secrets/initialAdminPassword
+    
     echo "------------------------------------------------------------"
     echo "############################### Finished - you're all set up. You can now go to grafana.${DOMAIN}, kibana.${DOMAIN}, prometheus.${DOMAIN} and alertmanager.${DOMAIN} to check out your metrics, logs and alerts. Use cleanup.sh to uninstall the suite."
     echo "------------------------------------------------------------"

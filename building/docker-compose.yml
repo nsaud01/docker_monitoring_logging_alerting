@@ -37,6 +37,10 @@ services:
     restart: always
     labels:
       container_group: monitoring
+    volumes:
+      - ./storage/sonarqube:/data
+    environment:
+      - SONARQUBE_HOME=/data
     logging:
       driver: gelf
       options:
