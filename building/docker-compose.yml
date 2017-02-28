@@ -64,8 +64,6 @@ services:
       - SONAR_PROJECT_KEY=hello:world
       - SONAR_PROJECT_NAME=HelloWorld
       - SONAR_PROJECT_VERSION=0.1
-    depends_on:
-      - sonarqube
     logging:
       driver: gelf
       options:
