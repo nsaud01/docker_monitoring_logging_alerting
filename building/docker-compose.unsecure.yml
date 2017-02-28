@@ -20,6 +20,11 @@ services:
     extends:
       file: docker-compose.yml
       service: sonarscan
+  logstash:
+    extends:
+      file: docker-compose.yml
+      service: logstash
+
 
 networks:
   default:

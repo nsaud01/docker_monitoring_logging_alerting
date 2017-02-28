@@ -98,7 +98,8 @@ elif [ $# -eq 3 ]; then
     echo "############################### Creating separate docker network..."
     echo "------------------------------------------------------------"
     docker network create --subnet=172.16.0.0/24 monitoring_logging
-
+    docker network create --subnet=172.24.0.0/24 building
+    docker network create --subnet=172.42.0.0/24 www
     echo "------------------------------------------------------------"
     echo "############################### Pulling images..."
     echo "------------------------------------------------------------"
@@ -136,7 +137,6 @@ elif [ $# -eq 3 ]; then
     echo "############################### Starting proxy container group..."
     echo "------------------------------------------------------------"
     docker-compose -f proxy/docker-compose.yml up --force-recreate -d
-    docker-compose -f www/docker-compose.secure.yml up --force-recreate -d
 
     echo "------------------------------------------------------------"
     echo "############################### Tailing the logs of the nginx-letsencrypt container through the creation of the Diffie-Hellman group and the initial setup of your SSL certificates..."
@@ -149,6 +149,7 @@ elif [ $# -eq 3 ]; then
     echo "############################### Restarting proxy container group..."
     echo "------------------------------------------------------------"
     docker-compose -f proxy/docker-compose.yml up --force-recreate -d
+    docker-compose -f www/docker-compose.secure.yml up --force-recreate -d
 
     echo "------------------------------------------------------------"
     echo "############################### Output from 'docker ps'..."

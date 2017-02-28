@@ -4,7 +4,7 @@ version: '2'
 services:
 
 #########################################################
-####                   BUILDING                      ####
+####                   LIVE                          ####
 #########################################################
 
   # Spins up a Jenkins Instance to build code
@@ -28,7 +28,29 @@ services:
 
 #########################################################
 
+#########################################################
 
+  # Aggregates logs and forwards them to Elasticsearch.
+  logstash:
+    image: logstash:5.1.1
+    expose:
+      - 5044
+      - 12201/udp
+    volumes:
+      - ./logstash/config:/config
+      - ./logstash/patterns:/opt/logstash/extra_patterns
+    restart: always
+    labels:
+      container_group: building
+    networks:
+      default:
+        ipv4_address: 172.42.0.38
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://172.42.0.38:12201
+        labels: container_group
+    command: logstash -f /config
 #########################################################
 
 

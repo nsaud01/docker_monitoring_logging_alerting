@@ -39,10 +39,6 @@ services:
     networks:
       default:
         ipv4_address: 172.16.0.38
-      building:
-        ipv4_address: 172.24.0.38
-      www:
-        ipv4_address: 172.42.0.38
     logging:
       driver: gelf
       options:
@@ -146,14 +142,6 @@ networks:
   default:
     external:
       name: monitoring_logging
-  building:
-    external:
-      name: building
-  default:
-    external:
-      name: www
-
-
 
 #########################################################
 
