@@ -20,7 +20,7 @@ services:
       - /usr/bin/make:/usr/bin/make
       - ../storage/jenkins:/var/jenkins_home
     labels:
-      - container_group: building
+      - "container_group=building"
       - "traefik.enable=true"
       - "traefik.backend=jenkins"
       - "traefik.frontend.rule=Host:jenkins.${DOMAIN}"
@@ -42,7 +42,7 @@ services:
       - 9000
     restart: always
     labels:
-      - container_group: building
+      - "container_group=building"
       - "traefik.enable=true"
       - "traefik.backend=sonarqube"
       - "traefik.frontend.rule=Host:sonarqube.${DOMAIN}"
