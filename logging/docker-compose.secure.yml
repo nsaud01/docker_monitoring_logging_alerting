@@ -46,7 +46,7 @@ services:
       service: kibana
     labels:
       - "traefik.enable=true"
-      - "traefik.backend=jenkins"
+      - "traefik.backend=kibana"
       - "traefik.frontend.rule=Host:kibana.${DOMAIN}"
       - "traefik.docker.network=monitoring_logging"
 

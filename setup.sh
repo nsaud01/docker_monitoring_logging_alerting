@@ -98,8 +98,8 @@ elif [ $# -eq 4 ]; then
     echo "------------------------------------------------------------"
     echo "############################### Setting Traefik ..."
     echo "------------------------------------------------------------"
-    sed -i 's/letsencrypt\@example\.com/$EMAIL/g' ./www/conf/traefik.toml
-    sed -i 's/example\.com/$DOMAIN/g' ./www/conf/traefik.toml
+    sed -i 's/letsencrypt\@example\.com/${EMAIL}/g' ./www/conf/traefik.toml
+    sed -i 's/example\.com/${DOMAIN}/g' ./www/conf/traefik.toml
 
     echo "------------------------------------------------------------"
     echo "############################### Creating separate docker network..."
