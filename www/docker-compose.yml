@@ -11,10 +11,10 @@ services:
   # Kudos : https://github.com/containerize-my-server/reverse-proxy/blob/master/docker-compose.yml
   traefik:
     image: traefik
-    expose:
-      - 80:80
-      - 443:443
-      - 8080:8080
+    ports:
+      - 80
+      - 443
+      - 8080
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:rw
@@ -23,7 +23,7 @@ services:
     labels:
       container_group: www
     networks:
-      - building
+      - building_net
       - monitoring_logging
     cap_drop:
       - all

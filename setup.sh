@@ -32,7 +32,7 @@ elif [ $# -eq 1 ]; then
     docker-compose -f monitoring/docker-compose.unsecure.yml pull
     docker-compose -f logging/docker-compose.unsecure.yml pull
     docker-compose -f building/docker-compose.unsecure.yml pull
-    docker-compose -f www/docker-compose.unsecure.yml pull
+    docker-compose -f www/docker-compose.yml pull
 
     echo "------------------------------------------------------------"
     echo "############################### Building images..."
@@ -40,7 +40,7 @@ elif [ $# -eq 1 ]; then
     docker-compose -f monitoring/docker-compose.unsecure.yml build
     docker-compose -f logging/docker-compose.unsecure.yml build
     docker-compose -f building/docker-compose.unsecure.yml build
-    docker-compose -f www/docker-compose.unsecure.yml build
+    docker-compose -f www/docker-compose.yml build
 
     echo "------------------------------------------------------------"
     echo "############################### Starting monitoring and logging container groups..."
@@ -48,7 +48,7 @@ elif [ $# -eq 1 ]; then
     docker-compose -f monitoring/docker-compose.unsecure.yml up --force-recreate -d
     docker-compose -f logging/docker-compose.unsecure.yml up --force-recreate -d
     docker-compose -f building/docker-compose.unsecure.yml up --force-recreate -d
-    docker-compose -f www/docker-compose.unsecure.yml up --force-recreate -d
+    docker-compose -f www/docker-compose.yml up --force-recreate -d
 
     echo "------------------------------------------------------------"
     echo "############################### Output from 'docker ps'..."
@@ -156,7 +156,7 @@ elif [ $# -eq 4 ]; then
     echo "############################### Restarting proxy container group..."
     echo "------------------------------------------------------------"
     #docker-compose -f proxy/docker-compose.yml up --force-recreate -d
-    docker-compose -f www/docker-compose.secure.yml up --force-recreate -d
+    docker-compose -f www/docker-compose.yml up --force-recreate -d
 
     echo "------------------------------------------------------------"
     echo "############################### Output from 'docker ps'..."
