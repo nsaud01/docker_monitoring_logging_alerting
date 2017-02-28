@@ -17,7 +17,7 @@ entryPoint = "https"
 # https is the default
 [entryPoints.https]
 address = ":443"
-[entrypoints.https.auth.basic]
+[entrypoints.http.auth.basic]
 users = ["HTTPASSWD"]
 [entryPoints.https.tls]
 
