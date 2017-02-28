@@ -12,6 +12,7 @@ services:
       - "traefik.backend=jenkins"
       - "traefik.frontend.rule=Host:jenkins.${DOMAIN}"
       - "traefik.docker.network=building_net"
+      - "traefik.port=8080"
 
   sonarqube:
     extends:

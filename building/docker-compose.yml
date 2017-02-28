@@ -60,7 +60,7 @@ services:
     volumes:
       - ../storage/app:/usr/src
     environment:
-      - SONAR_HOST_URL=http://sonar:9000
+      - SONAR_HOST_URL=http://sonarqube:9000
       - SONAR_PROJECT_KEY=hello:world
       - SONAR_PROJECT_NAME=HelloWorld
       - SONAR_PROJECT_VERSION=0.1

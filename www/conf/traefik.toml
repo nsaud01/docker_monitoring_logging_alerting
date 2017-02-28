@@ -17,7 +17,8 @@ entryPoint = "https"
 # https is the default
 [entryPoints.https]
 address = ":443"
-
+[entrypoints.http.auth.basic]
+users = ["__HTTPASSWD__"]
 [entryPoints.https.tls]
 
 # Enable ACME (Let's Encrypt): automatic SSL
