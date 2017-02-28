@@ -1,0 +1,31 @@
+version: '2'
+
+
+services:
+
+  jenkins:
+    extends:
+      file: docker-compose.yml
+      service: jenkins
+    environment:
+      - VIRTUAL_HOST=jenkins.${DOMAIN}
+      - LETSENCRYPT_HOST=jenkins.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
+      - LETSENCRYPT_TEST=false
+      - HTTPS_METHOD=nohttp
+
+  sonarqube:
+    extends:
+      file: docker-compose.yml
+      service: sonarqube
+    environment:
+      - VIRTUAL_HOST=sonarqube.${DOMAIN}
+      - LETSENCRYPT_HOST=sonarqube.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
+      - LETSENCRYPT_TEST=false
+      - HTTPS_METHOD=nohttp
+
+networks:
+  default:
+    external:
+      name: monitoring_logging

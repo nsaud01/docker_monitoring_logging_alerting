@@ -1,0 +1,19 @@
+version: '2'
+
+
+services:
+
+  jenkins:
+    extends:
+      file: docker-compose.yml
+      service: jenkins
+
+  sonarqube:
+    extends:
+      file: docker-compose.yml
+      service: sonarqube
+    
+networks:
+  default:
+    external:
+      name: monitoring_logging

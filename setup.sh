@@ -29,23 +29,31 @@ elif [ $# -eq 1 ]; then
     echo "------------------------------------------------------------"
     docker-compose -f monitoring/docker-compose.unsecure.yml pull
     docker-compose -f logging/docker-compose.unsecure.yml pull
+    docker-compose -f building/docker-compose.unsecure.yml pull
 
     echo "------------------------------------------------------------"
     echo "############################### Building images..."
     echo "------------------------------------------------------------"
     docker-compose -f monitoring/docker-compose.unsecure.yml build
     docker-compose -f logging/docker-compose.unsecure.yml build
+    docker-compose -f building/docker-compose.unsecure.yml build
 
     echo "------------------------------------------------------------"
     echo "############################### Starting monitoring and logging container groups..."
     echo "------------------------------------------------------------"
     docker-compose -f monitoring/docker-compose.unsecure.yml up --force-recreate -d
     docker-compose -f logging/docker-compose.unsecure.yml up --force-recreate -d
+    docker-compose -f building/docker-compose.unsecure.yml up --force-recreate -d
 
     echo "------------------------------------------------------------"
     echo "############################### Output from 'docker ps'..."
     echo "------------------------------------------------------------"
     docker ps
+
+    echo "------------------------------------------------------------"
+    echo "############################### Grab Jenkins Admin Token here:..."
+    echo "------------------------------------------------------------"
+    docker-compose -f building/docker-compose.unsecure.yml logs jenkins
 
     echo "------------------------------------------------------------"
     echo "############################### Finished - you're all set up. Use cleanup.sh to uninstall the suite."
@@ -90,6 +98,7 @@ elif [ $# -eq 3 ]; then
     docker-compose -f monitoring/docker-compose.secure.yml pull
     docker-compose -f logging/docker-compose.secure.yml pull
     docker-compose -f proxy/docker-compose.yml pull
+    docker-compose -f building/docker-compose.yml pull
 
     echo "------------------------------------------------------------"
     echo "############################### Building images..."
@@ -97,12 +106,14 @@ elif [ $# -eq 3 ]; then
     docker-compose -f monitoring/docker-compose.secure.yml build
     docker-compose -f logging/docker-compose.secure.yml build
     docker-compose -f proxy/docker-compose.yml build
+    docker-compose -f building/docker-compose.yml build
 
     echo "------------------------------------------------------------"
     echo "############################### Starting monitoring and logging container groups..."
     echo "------------------------------------------------------------"
     docker-compose -f monitoring/docker-compose.secure.yml up --force-recreate -d
     docker-compose -f logging/docker-compose.secure.yml up --force-recreate -d
+    docker-compose -f building/docker-compose.secure.yml up --force-recreate -d
 
 
     echo "------------------------------------------------------------"
@@ -131,6 +142,11 @@ elif [ $# -eq 3 ]; then
     echo "############################### Output from 'docker ps'..."
     echo "------------------------------------------------------------"
     docker ps
+
+    echo "------------------------------------------------------------"
+    echo "############################### Grab Jenkins Admin Token here:..."
+    echo "------------------------------------------------------------"
+    docker-compose -f building/docker-compose.yml logs jenkins
 
     echo "------------------------------------------------------------"
     echo "############################### Finished - you're all set up. You can now go to grafana.${DOMAIN}, kibana.${DOMAIN}, prometheus.${DOMAIN} and alertmanager.${DOMAIN} to check out your metrics, logs and alerts. Use cleanup.sh to uninstall the suite."

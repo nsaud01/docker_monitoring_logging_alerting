@@ -1,0 +1,59 @@
+version: '2'
+
+
+services:
+
+#########################################################
+####                   BUILDING                      ####
+#########################################################
+
+  # Spins up a Jenkins Instance to build code
+  jenkins:
+    image: jenkins
+    expose:
+      - 8080
+      - 50000
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - /usr/bin/docker:/usr/bin/docker
+      - /usr/bin/make:/usr/bin/make
+      - ./storage/jenkins:/var/jenkins_home
+    labels:
+      container_group: building
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://192.16.0.38:12201
+        labels: container_group
+
+#########################################################
+
+  # Runs a sonarqube to keep track of your l33t skillz
+  sonarqube:
+    image: sonarqube
+    expose:
+      - 9000
+    restart: always
+    labels:
+      container_group: monitoring
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://192.16.0.38:12201
+        labels: container_group
+
+#########################################################
+
+
+#########################################################
+####                   Networking                    ####
+#########################################################
+
+# Extra-network is necessary to have a dedicated IP for Logstash to forwards log to.
+networks:
+  default:
+    external:
+      name: monitoring_logging
+
+#########################################################
