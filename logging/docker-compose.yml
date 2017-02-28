@@ -37,12 +37,13 @@ services:
     labels:
       container_group: logging
     networks:
-      www:
+      www_net:
         ipv4_address: 172.42.0.38
-      building:
+      building_net:
         ipv4_address: 172.24.0.38
       default:
         ipv4_address: 172.16.0.38
+
     logging:
       driver: gelf
       options:
@@ -143,18 +144,17 @@ services:
 
 # Extra-network is necessary to have a dedicated IP for Logstash to forwards log to.
 networks:
+  www_net:
+    external: true
 
-  www:
-    external:
-      name: www
-
-  building:
-    external:
-      name: building
+  building_net:
+    external: true
 
   default:
     external:
       name: monitoring_logging
+
+
 
 #########################################################
 

@@ -24,4 +24,4 @@ services:
 networks:
   default:
     external:
-      name: building
+      name: building_net

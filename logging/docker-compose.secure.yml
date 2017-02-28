@@ -59,6 +59,12 @@ services:
   #     service: elastalert
 
 networks:
+  www_net:
+    external: true
+
+  building_net:
+    external: true
+
   default:
     external:
       name: monitoring_logging

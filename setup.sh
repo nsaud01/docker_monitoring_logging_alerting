@@ -23,8 +23,8 @@ elif [ $# -eq 1 ]; then
     echo "############################### Creating separate docker network..."
     echo "------------------------------------------------------------"
     docker network create --subnet=172.16.0.0/24 monitoring_logging
-    docker network create --subnet=172.24.0.0/24 building
-    docker network create --subnet=172.42.0.0/24 www
+    docker network create --subnet=172.24.0.0/24 building_net
+    docker network create --subnet=172.42.0.0/24 www_net
 
     echo "------------------------------------------------------------"
     echo "############################### Pulling images..."
@@ -98,8 +98,8 @@ elif [ $# -eq 3 ]; then
     echo "############################### Creating separate docker network..."
     echo "------------------------------------------------------------"
     docker network create --subnet=172.16.0.0/24 monitoring_logging
-    docker network create --subnet=172.24.0.0/24 building
-    docker network create --subnet=172.42.0.0/24 www
+    docker network create --subnet=172.24.0.0/24 building_net
+    docker network create --subnet=172.42.0.0/24 www_net
     echo "------------------------------------------------------------"
     echo "############################### Pulling images..."
     echo "------------------------------------------------------------"
