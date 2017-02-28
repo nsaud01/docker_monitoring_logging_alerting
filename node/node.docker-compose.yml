@@ -13,7 +13,8 @@ services:
       - ../logging/filebeat.yml:/filebeat.yml
     restart: always
     labels:
-      container_group: monitoring
+      - container_group: monitoring
+      - "traefik.enable=false"
     logging:
       driver: gelf
       options:
@@ -31,7 +32,8 @@ services:
       - 9100
     restart: always
     labels:
-      container_group: monitoring
+      - container_group: monitoring
+      - "traefik.enable=false"
     logging:
       driver: gelf
       options:
@@ -52,7 +54,11 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     restart: always
     labels:
-      container_group: monitoring
+      - container_group: monitoring
+      - "traefik.enable=false"
+      - "traefik.backend=cadvisor"
+      - "traefik.frontend.rule=Host:cadvisor.${DOMAIN}"
+      - "traefik.docker.network=monitoring_logging"
     logging:
       driver: gelf
       options:

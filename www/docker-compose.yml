@@ -8,18 +8,27 @@ services:
 #########################################################
 
   # Spins up a Jenkins Instance to build code
+  # Kudos : https://github.com/containerize-my-server/reverse-proxy/blob/master/docker-compose.yml
   traefik:
     image: traefik
     expose:
-      - 80
-      - 443
-      - 8080
+      - 80:80
+      - 443:443
+      - 8080:8080
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:rw
-      - /dev/null:/traefik.toml
+      - ./conf/traefik.toml:/traefik.toml
+      - ../storage/traefik/acme.json:/acme.json
     labels:
       container_group: www
+    networks:
+      - building
+      - monitoring_logging
+    cap_drop:
+      - all
+    cap_add:
+      - net_bind_service
     logging:
       driver: gelf
       options:
@@ -38,5 +47,10 @@ networks:
   default:
     external:
       name: www_net
-
+  building_net:
+    external:
+      name: building_net
+  monitoring_logging:
+    external:
+      name: monitoring_logging
 #########################################################

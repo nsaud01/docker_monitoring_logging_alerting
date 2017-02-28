@@ -44,14 +44,11 @@ services:
     extends:
       file: docker-compose.yml
       service: kibana
-    environment:
-      - VIRTUAL_HOST=kibana.${DOMAIN}
-      - LETSENCRYPT_HOST=kibana.${DOMAIN}
-      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
-      - LETSENCRYPT_TEST=false
-      - HTTPS_METHOD=nohttp
     labels:
-      - "traefik.enable=false"
+      - "traefik.enable=true"
+      - "traefik.backend=jenkins"
+      - "traefik.frontend.rule=Host:kibana.${DOMAIN}"
+      - "traefik.docker.network=monitoring_logging"
 
   # elastalert:
   #   extends:
