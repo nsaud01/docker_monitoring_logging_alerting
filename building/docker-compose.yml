@@ -41,6 +41,10 @@ services:
       - ../storage/sonarqube:/data
     environment:
       - SONARQUBE_HOME=/data
+    networks:
+      default:
+        ipv4_address: 172.24.0.42
+
     logging:
       driver: gelf
       options:
@@ -60,7 +64,7 @@ services:
     volumes:
       - ../storage/app:/usr/src
     environment:
-      - SONAR_HOST_URL=http://sonarqube:9000
+      - SONAR_HOST_URL=http://172.24.0.42:9000
       - SONAR_PROJECT_KEY=hello:world
       - SONAR_PROJECT_NAME=HelloWorld
       - SONAR_PROJECT_VERSION=0.1
