@@ -7,14 +7,14 @@ services:
 ####                   LIVE                          ####
 #########################################################
 
-  # Spins up a Jenkins Instance to build code
+  # Spins up a Traefik Instance to load balance services
   # Kudos : https://github.com/containerize-my-server/reverse-proxy/blob/master/docker-compose.yml
   traefik:
     image: traefik
     ports:
       - 80:80
       - 443:443
-      - 8080:8080
+      - 8666:8080
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:rw
@@ -25,6 +25,7 @@ services:
     networks:
       - building_net
       - monitoring_logging
+      - default
     cap_drop:
       - all
     cap_add:

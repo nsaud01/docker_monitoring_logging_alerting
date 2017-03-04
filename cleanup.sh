@@ -19,7 +19,7 @@ elif [ $# -eq 1 ]; then
     echo "------------------------------------------------------------"
     docker-compose -f monitoring/docker-compose.unsecure.yml down -v
     docker-compose -f logging/docker-compose.unsecure.yml down -v
-    docker-compose -f building/docker-compose.unsecure.yml down -v
+    docker-compose -f building/docker-compose.yml down -v
     docker-compose -f www/docker-compose.yml down -v
 
   elif [ "$1" = "secure" ]; then

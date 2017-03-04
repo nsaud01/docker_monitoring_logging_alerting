@@ -7,6 +7,7 @@ if [ $# -eq 0 ]; then
 
 elif [ $# -eq 1 ]; then
   if [ "$1" = "unsecure" ]; then
+    export HTPASS=`htpasswd -nbB admin admin`
 
     echo "------------------------------------------------------------"
     echo "############################### Installing suite in UNSECURE mode."
@@ -99,6 +100,7 @@ elif [ $# -eq 4 ]; then
     echo "------------------------------------------------------------"
     echo "############################### Setting Traefik ..."
     echo "------------------------------------------------------------"
+    cp ./www/conf/traefik.toml.default ./www/conf/traefik.toml
     sed -i "s/letsencrypt\@example\.com/$EMAIL/g" ./www/conf/traefik.toml
     sed -i "s/example\.com/$DOMAIN/g" ./www/conf/traefik.toml
     sed -i "s/HTTPASSWD/$HTPASS/g" ./www/conf/traefik.toml
