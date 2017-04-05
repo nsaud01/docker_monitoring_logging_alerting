@@ -4,8 +4,6 @@ services:
   proxy:
     image: traefik
     command: --web --docker --docker.domain=docker.localhost --logLevel=DEBUG --configFile=/traefik.toml
-    networks:
-      - webgateway
     ports:
       - "80:80"
       - "8080:8080"
@@ -14,12 +12,14 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./conf/traefik.toml:/traefik.toml
       - ./certs/:/certs/
-      networks:
-        - monitoring_logging
-        - default
-      cap_drop:
-        - all
-      cap_add:
-       - net_bind_service
+    networks:
+      - monitoring_logging
+      - default
+#      - webgateway
+#      cap_drop:
+#        - all
+#      cap_add:
+#       - net_bind_service
 #  webgateway:
 #    driver: bridge
+
