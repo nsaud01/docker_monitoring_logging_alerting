@@ -14,6 +14,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./conf/traefik.toml:/traefik.toml
       - ./certs/:/certs/
-networks:
-  webgateway:
-    driver: bridge
+      networks:
+        - monitoring_logging
+        - default
+      cap_drop:
+        - all
+      cap_add:
+       - net_bind_service
+#  webgateway:
+#    driver: bridge
