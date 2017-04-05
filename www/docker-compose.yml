@@ -19,11 +19,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:rw
       - ./conf/traefik.toml:/traefik.toml
-      - ../storage/traefik/acme.json:/acme.json
+      - ../storage/traefik/certs/:certs/
     labels:
       container_group: www
     networks:
-      - building_net
       - monitoring_logging
       - default
     cap_drop:
@@ -48,9 +47,6 @@ networks:
   default:
     external:
       name: www_net
-  building_net:
-    external:
-      name: building_net
   monitoring_logging:
     external:
       name: monitoring_logging
