@@ -23,3 +23,16 @@ services:
 #  webgateway:
 #    driver: bridge
 
+#########################################################
+####                   Networking                    ####
+#########################################################
+
+# Extra-network is necessary to have a dedicated IP for Logstash to forwards log to.
+networks:
+  default:
+    external:
+      name: www_net
+  monitoring_logging:
+    external:
+      name: monitoring_logging
+#########################################################
