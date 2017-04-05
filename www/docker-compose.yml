@@ -1,53 +1,19 @@
 version: '2'
 
-
 services:
-
-#########################################################
-####                   LIVE                          ####
-#########################################################
-
-  # Spins up a Traefik Instance to load balance services
-  # Kudos : https://github.com/containerize-my-server/reverse-proxy/blob/master/docker-compose.yml
-  traefik:
+  proxy:
     image: traefik
-    ports:
-      - 80:80
-      - 443:443
-      - 8666:8080
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:rw
-      - ./conf/traefik.toml:/traefik.toml
-      - ../storage/traefik/certs/:certs/
-    labels:
-      container_group: www
+    command: --web --docker --docker.domain=docker.localhost --logLevel=DEBUG --configFile=/traefik.toml
     networks:
-      - monitoring_logging
-      - default
-    cap_drop:
-      - all
-    cap_add:
-      - net_bind_service
-    logging:
-      driver: gelf
-      options:
-        gelf-address: udp://172.42.0.38:12201
-        labels: container_group
-
-#########################################################
-
-
-#########################################################
-####                   Networking                    ####
-#########################################################
-
-# Extra-network is necessary to have a dedicated IP for Logstash to forwards log to.
+      - webgateway
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "433:433"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./conf/traefik.toml:/traefik.toml
+      - ./certs/:/certs/
 networks:
-  default:
-    external:
-      name: www_net
-  monitoring_logging:
-    external:
-      name: monitoring_logging
-#########################################################
+  webgateway:
+    driver: bridge
