@@ -57,7 +57,7 @@ services:
       - container_group: monitoring
       - "traefik.enable=false"
       - "traefik.backend=cadvisor"
-      - "traefik.frontend.rule=Host:cadvisor.${DOMAIN}"
+      - "traefik.frontend.rule=Host:cadvisor.sandcsw.com"
       - "traefik.docker.network=monitoring_logging"
     logging:
       driver: gelf
