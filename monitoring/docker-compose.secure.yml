@@ -25,8 +25,7 @@ services:
       - "traefik.enable=true"
       - "traefik.backend=prometheus"
       - "traefik.frontend.rule=Host:prometheus.sandcsw.com"
-      - "traefik.frontend.entryPoints=https"
-      - "traefik.port=443"
+      - "traefik.port=9090"
       - "traefik.docker.network=monitoring_logging"
 
 
@@ -38,8 +37,6 @@ services:
       - "traefik.enable=true"
       - "traefik.backend=grafana"
       - "traefik.frontend.rule=Host:grafana.sandcsw.com"
-      - "traefik.frontend.entryPoints=https"
-      - "traefik.port=443"
       - "traefik.docker.network=monitoring_logging"
 
   alertmanager:
@@ -50,8 +47,6 @@ services:
       - "traefik.enable=true"
       - "traefik.backend=alertmanager"
       - "traefik.frontend.rule=Host:alertmanager.sandcsw.com"
-      - "traefik.frontend.entryPoints=https"
-      - "traefik.port=443"
       - "traefik.docker.network=monitoring_logging"
 
 networks:
