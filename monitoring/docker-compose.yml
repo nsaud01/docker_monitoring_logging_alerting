@@ -13,13 +13,7 @@ services:
     expose:
       - 9100
     restart: always
-    labels:
-      container_group: monitoring
-    logging:
-      driver: gelf
-      options:
-        gelf-address: udp://172.16.0.38:12201
-        labels: container_group
+
 
 #########################################################
 
@@ -34,13 +28,6 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
     restart: always
-    labels:
-      container_group: monitoring
-    logging:
-      driver: gelf
-      options:
-        gelf-address: udp://172.16.0.38:12201
-        labels: container_group
 
 #########################################################
 
@@ -64,13 +51,6 @@ services:
       - "-alertmanager.url=http://alertmanager:9093"
       - "-storage.local.memory-chunks=300000"
       - "-storage.local.retention=744h"
-    labels:
-      container_group: monitoring
-    logging:
-      driver: gelf
-      options:
-        gelf-address: udp://172.16.0.38:12201
-        labels: container_group
 
 #########################################################
 
@@ -84,11 +64,6 @@ services:
     restart: always
     labels:
       container_group: monitoring
-    logging:
-      driver: gelf
-      options:
-        gelf-address: udp://172.16.0.38:12201
-        labels: container_group
     environment:
       - GF_SECURITY_ADMIN_USER=admin
 
@@ -106,23 +81,16 @@ services:
     command:
       - '-config.file=/etc/alertmanager/config.yml'
       - '-storage.path=/alertmanager'
-    labels:
-      container_group: monitoring
-    logging:
-      driver: gelf
-      options:
-        gelf-address: udp://172.16.0.38:12201
-        labels: container_group
 
 #########################################################
 ####                   Networking                    ####
 #########################################################
 
 # Extra-network is necessary to have a dedicated IP for Logstash to forwards log to.
-networks:
-  default:
-    external:
-      name: monitoring_logging
+#networks:
+#  default:
+#    external:
+#      name: monitoring_logging
 
 #########################################################
 
@@ -188,5 +156,3 @@ networks:
   #       labels: container_group
   #   environment:
   #     - API_KEY=
-
-
